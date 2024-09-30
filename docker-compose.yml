@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  agente-viagens:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}  # Variável de ambiente para a chave da OpenAI

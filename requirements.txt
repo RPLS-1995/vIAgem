@@ -1,0 +1,2 @@
+openai==0.27.0  # Versão compatível com a API da OpenAI
+streamlit==1.24.0  # Versão para o front-end
