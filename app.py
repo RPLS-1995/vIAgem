@@ -2,11 +2,15 @@ import streamlit as st
 import openai
 import os
 from datetime import date
+from random import  uniform
 from prompts import PROMPT_INICIAL
 from prompts import construir_prompt_guia_turistico
 
 # Carrega a chave API da OpenAI de uma variável de ambiente
 openai.api_key = os.getenv('OPENAI_API_KEY')
+
+MODEL = "gpt-3.5-turbo"
+
 
 # Função para verificar a chave API da OpenAI
 def verificar_api_key():
@@ -15,12 +19,21 @@ def verificar_api_key():
         return False
     return True
 
+
 # Função para ajustar a temperatura e top_p dinamicamente
 def ajustar_parametros(user_data):
     # Ajuste simples baseado no número de pessoas e orçamento
-    temperatura = 0.5 + (min(user_data['num_pessoas'], 10) / 20)  # Quanto mais pessoas, maior a temperatura
-    top_p = min(user_data['orcamento_max'] / 1000, 1)  # Quanto maior o orçamento, maior o top_p
+    if min(user_data['idade_pessoas']) < 18 or max(user_data['idade_pessoas']) > 60:
+        temperatura = uniform(0.9, 1.0)
+        top_p = 0.68
+    elif min(user_data['idade_pessoas']) > 18 or max(user_data['idade_pessoas']) < 30:
+        temperatura = uniform(0.3, 0.5)
+        top_p = 1.0
+    else:
+        temperatura = uniform(0.65, 1.0)
+        top_p = 0.95
     return temperatura, top_p
+
 
 # Função para gerar a recomendação da LLM com base no input do usuário
 def gerar_recomendacao(user_data):
@@ -37,7 +50,7 @@ def gerar_recomendacao(user_data):
     try:
         # Chamada à API da OpenAI usando o modelo gpt-3.5-turbo
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model=MODEL,
             messages=messages,
             temperature=0.2,
             top_p=1
@@ -47,6 +60,7 @@ def gerar_recomendacao(user_data):
     except Exception as e:
         st.error(f"Ocorreu um erro ao gerar a recomendação: {e}")
         return None
+
 
 # Função para gerar uma mensagem inicial assim que o sistema for carregado
 def prompt_inicial():
@@ -61,7 +75,7 @@ def prompt_inicial():
     try:
         # Chamada à API da OpenAI usando o modelo gpt-3.5-turbo
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model=MODEL,
             messages=messages
         )
 
@@ -69,6 +83,7 @@ def prompt_inicial():
     except Exception as e:
         st.error(f"Ocorreu um erro ao gerar o prompt inicial: {e}")
         return None
+
 
 # Função principal do Streamlit
 def main():
@@ -100,6 +115,8 @@ def main():
     if st.button('Planejar Viagem'):
         if not destino or not data_inicio or not data_fim or not idade_pessoas or orcamento_max <= 0:
             st.error("Por favor, preencha todos os campos corretamente.")
+        elif data_inicio > data_fim:
+            st.error("A data inicial deve ser anterior à data final.")
         else:
             # Converte as idades para uma lista
             idades = [int(idade.strip()) for idade in idade_pessoas.split(',') if idade.strip().isdigit()]
