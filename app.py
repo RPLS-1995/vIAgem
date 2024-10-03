@@ -9,7 +9,7 @@ from prompts import construir_prompt_guia_turistico
 # Carrega a chave API da OpenAI de uma variável de ambiente
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-MODEL = "gpt-3.5-turbo"
+MODEL = "gpt-4-turbo"
 
 
 # Função para verificar a chave API da OpenAI
@@ -24,10 +24,10 @@ def verificar_api_key():
 def ajustar_parametros(user_data):
     # Ajuste simples baseado no número de pessoas e orçamento
     if min(user_data['idade_pessoas']) < 18 or max(user_data['idade_pessoas']) > 60:
-        temperatura = uniform(0.9, 1.0)
-        top_p = 0.68
-    elif min(user_data['idade_pessoas']) > 18 or max(user_data['idade_pessoas']) < 30:
         temperatura = uniform(0.3, 0.5)
+        top_p = 0.85
+    elif min(user_data['idade_pessoas']) > 18 or max(user_data['idade_pessoas']) < 30:
+        temperatura = uniform(0.9, 1.0)
         top_p = 1.0
     else:
         temperatura = uniform(0.65, 1.0)
@@ -39,7 +39,7 @@ def ajustar_parametros(user_data):
 def gerar_recomendacao(user_data):
     temperatura, top_p = ajustar_parametros(user_data)
 
-    # Cria as mensagens para o modelo gpt-3.5-turbo
+    # Cria as mensagens para o modelo gpt-4-turbo
     messages = [
         {
             "role": "system",
@@ -48,12 +48,12 @@ def gerar_recomendacao(user_data):
     ]
 
     try:
-        # Chamada à API da OpenAI usando o modelo gpt-3.5-turbo
+        # Chamada à API da OpenAI usando o modelo gpt-4-turbo
         response = openai.ChatCompletion.create(
             model=MODEL,
             messages=messages,
-            temperature=0.2,
-            top_p=1
+            temperature=temperatura,
+            top_p=top_p
         )
 
         return response['choices'][0]['message']['content'].strip()
@@ -73,7 +73,7 @@ def prompt_inicial():
     ]
 
     try:
-        # Chamada à API da OpenAI usando o modelo gpt-3.5-turbo
+        # Chamada à API da OpenAI usando o modelo gpt-4-turbo
         response = openai.ChatCompletion.create(
             model=MODEL,
             messages=messages
