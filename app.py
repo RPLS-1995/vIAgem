@@ -131,8 +131,9 @@ def main():
                 'orcamento_max': orcamento_max
             }
 
-            # Gera a recomendação e exibe para o usuário
-            recomendacao = gerar_recomendacao(user_data)
+            # Exibe um "pop-up" temporário durante a geração da recomendação
+            with st.spinner('Estamos planejando sua viagem! Aguarde alguns segundos...'):
+                recomendacao = gerar_recomendacao(user_data)
 
             if recomendacao:
                 st.write('### Recomendação para sua viagem:')

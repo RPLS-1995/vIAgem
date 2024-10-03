@@ -36,7 +36,9 @@ def construir_prompt_guia_turistico(user_data, temperatura, top_p):
 A viagem será de {user_data['data_inicio']} até {user_data['data_fim']}.
 A idade das pessoas é {', '.join(map(str, user_data['idade_pessoas']))} e o orçamento máximo é {user_data['orcamento_max']} reais.
 Por favor, ofereça um cronograma detalhado para a realização dessa viagem, dentro do orçamento fornecido. Não invente dados, forneça somente dados reais! Para cada ponto turístico, compartilhe um link com mais fotos ou informações.
-Exemplo: Se eu fornecer uma viagem de 4 dias para 1 pessoa e com orçamento de 1000 reais, forneça a resposta como no formato abaixo:
+O guia turístico deve cobrir todos os dias do intervalo entre a data inicial e a data final. Por exemplo, para uma viagem entre 21/01/2024 e 25/01/2024,
+o cronograma deve apresentar o que fazer nos dias 21/01, 22/01, 23/01, 24/01 e 25/01.
+Exemplo de guia: Se eu fornecer uma viagem de 4 dias para 1 pessoa e com orçamento de 1000 reais, forneça a resposta como no formato abaixo:
 Dia 1:
 - Faça o check-in no hotel previamente reservado.
 - Conheça a Catedral da cidade e a estação central.
@@ -61,6 +63,9 @@ Lembre-se sempre de colocar os valores finais em uma linha nova do guia,
 
 Lembre-se sempre de colocar ao final o valor total da viagem,
  que é o somatório dos valores a serem gastos em cada um dos dias.
+Ao fazer os cálculos, lembre-se de multiplicar a diária de um hotel pelo número de noites
+que o cliente ficará hospedado. Por exemplo, se uma pessoa ficará 4 noites num hotel em Paris e este hotel
+custa uma diária de 300 reais, deve-se adicionar 1200 reais no valor final.  
 Forneça informações completas e detalhadas, não somente bullet points.
  Seja sempre amigável na resposta com o usuário, usando uma linguagem
 próxima a de um guia turístico experiente.
@@ -72,7 +77,4 @@ Você pode também separar o guia de pequenos blocos. Por exemplo, uma viagem
  para a Itália de 12 dias pode ser separada em:
 Dias 1 a 4: Milão; Dias 5 a 8: Florença; Dias 9 a 12: Roma.
 Na linha seguinte a cada conjunto, inicie o guia, conforme
- mostrado anteriormente no prompt.
-
-Faça o guia utilizando os seguintes valores para os parâmetros temperatura
- e Top P, respectivamente: {temperatura} e {top_p}"""
+ mostrado anteriormente no prompt."""
