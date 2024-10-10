@@ -91,7 +91,7 @@ def prompt_inicial():
 def salvar_pdf(texto):
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", size=12)
+    pdf.set_font("Helvetica", size=12)
     pdf.multi_cell(0, 10, texto)
 
     # Salva o conteúdo do PDF no formato de string de bytes
@@ -153,7 +153,7 @@ def main():
 
             if recomendacao:
                 st.write('### Recomendação para sua viagem:')
-                st.write(recomendacao)
+                st.write(recomendacao.replace('$', '\\$'))
 
                 # Gera o PDF e exibe o botão para download
                 pdf_buffer = salvar_pdf(recomendacao)
