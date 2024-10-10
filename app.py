@@ -5,6 +5,8 @@ from datetime import date
 from random import uniform
 from prompts import PROMPT_INICIAL
 from prompts import construir_prompt_guia_turistico
+from fpdf import FPDF
+from io import BytesIO
 
 # Carrega a chave API da OpenAI de uma variável de ambiente
 openai.api_key = os.getenv('OPENAI_API_KEY')
@@ -85,6 +87,20 @@ def prompt_inicial():
         return None
 
 
+# Função para salvar o texto em PDF e retornar o arquivo para download
+def salvar_pdf(texto):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    pdf.multi_cell(0, 10, texto)
+
+    # Salva o conteúdo do PDF no formato de string de bytes
+    pdf_output = pdf.output(dest='S').encode('latin1')
+
+    # Retorna o conteúdo do PDF como bytes
+    return BytesIO(pdf_output)
+
+
 # Função principal do Streamlit
 def main():
     # Verifica a chave da API
@@ -138,6 +154,15 @@ def main():
             if recomendacao:
                 st.write('### Recomendação para sua viagem:')
                 st.write(recomendacao)
+
+                # Gera o PDF e exibe o botão para download
+                pdf_buffer = salvar_pdf(recomendacao)
+                st.download_button(
+                    label="Baixar recomendação em PDF",
+                    data=pdf_buffer,
+                    file_name="guia_viagem.pdf",
+                    mime="application/pdf"
+                )
 
 # Verifica se o script está sendo executado diretamente
 if __name__ == '__main__':
