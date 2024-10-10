@@ -2,7 +2,7 @@ import streamlit as st
 import openai
 import os
 from datetime import date
-from random import  uniform
+from random import uniform
 from prompts import PROMPT_INICIAL
 from prompts import construir_prompt_guia_turistico
 
