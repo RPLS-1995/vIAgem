@@ -34,6 +34,13 @@ def ajustar_parametros(user_data):
     else:
         temperatura = uniform(0.65, 1.0)
         top_p = 0.95
+
+    if user_data['num_pessoas'] <= 2:
+        temperatura = temperatura + 0.1
+    elif 5 < user_data['num_pessoas'] <= 15:
+        temperatura = temperatura - 0.05
+    elif user_data['num_pessoas'] > 15:
+        temperatura = temperatura - 0.15
     return temperatura, top_p
 
 
@@ -124,7 +131,7 @@ def main():
     data_inicio = st.date_input('Data de Início', value=date.today())
     data_fim = st.date_input('Data de Fim', value=date.today())
     num_pessoas = st.number_input('Número de Pessoas', min_value=1, value=1)
-    idade_pessoas = st.text_input('Idade de Cada Pessoa (separadas por vírgula)', placeholder='Ex: 25, 30, 18')
+    idade_pessoas = st.text_input('Idades da pessoa mais nova e da pessoa mais velha (separadas por vírgula)', placeholder='Ex: 18, 62')
     orcamento_max = st.number_input('Orçamento Máximo (em reais)', min_value=100)
 
     # Botão de envio
@@ -149,7 +156,7 @@ def main():
 
             # Exibe um "pop-up" temporário durante a geração da recomendação
             with st.spinner('Estamos planejando sua viagem! Aguarde alguns segundos...'):
-                recomendacao = gerar_recomendacao(user_data)
+                recomendacao = gerar_recomendacao(user_data).replace("œ","oe")
 
             if recomendacao:
                 st.write('### Recomendação para sua viagem:')
