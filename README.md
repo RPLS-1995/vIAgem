@@ -62,3 +62,30 @@ e um valor médio de hospedagem. O guia turístico também compartilha links par
 aos sites para compra de tickets.
 
 
+## Diferenciais ##
+O guia turístico inteligente possui algumas características que o tornam único e especial.
+Dentre elas, temos uma adaptação dinâmica dos parâmetros da LLM: Os valores de Temperatura e Top P variam de acordo
+com os dados fornecidos pelo cliente. Por exemplo, se a viagem será feita apenas por jovens, o guia de turismo será mais "ousado"
+e criativo. Por outro lado, caso a viagem tenha crianças ou sêniors, as sugestões de passeios serão mais "conservadoras".
+Abaixo temos um exemplo dessa diferença, com sugestões de passeios ao Japão para viajantes de 19 anos... 
+
+![recomendacao_passeio_19_anos](https://github.com/user-attachments/assets/85275fa2-041f-49db-8590-e9e3be09e38f)
+
+...e para viajantes de 72 anos.
+![recomendacao_passeio_senior_72_anos](https://github.com/user-attachments/assets/0f00cc83-b3b2-4d21-94e4-93868989d657)
+
+Outro diferencial do vIAgem é o alerta gerado ao cliente caso este decida ir para uma cidade ou país atualmente em conflito armado.
+Pensnado na segurança, o sistema deve avisar o cliente sobre a situação atual e sugerir outros destinos próximos que possam
+interessar e que tenham maiores garantias de segurança.
+Abaixo temos um exemplo, onde o cliente coloca como destino o Ucrânia, um país envolvido em uma guerra desde 24/02/2022.
+Dessa forma, o vIAgem sugere que o cliente visite a vizinha Polônia como alternativa.
+![recomendacao_passeio_zona_conflito](https://github.com/user-attachments/assets/638d9b1e-afea-4d34-aff8-215cf7eaaa3e)
+
+Finalmente, o sistema tem a capacidade de interpretar o destino que o usuário deseja conhecer, mesmo com um destino inválido.
+Por exemplo, caso o cliente coloque "Pão de Queijo" como destino, o vIAgem deverá supor que o cliente quer visitar Minas Gerais
+ou uma cidade do estado brasileiro, famoso por esta comida marcante.
+Outro exemplo pode ser visto abaixo, quando o cliente colocou a Prússia como destino, um país que não existe desde 1918 e
+que fazia parte do Império Alemão. Dessa forma, sugeriu-se um guia para visitar Berlim, justamente a capital alemã.
+![recomendacao_pais_inexistente](https://github.com/user-attachments/assets/d9c05b19-f1a2-4bb1-9f0c-f2789f60300d)
+
+
