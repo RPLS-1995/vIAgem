@@ -4,6 +4,11 @@ import os
 from datetime import date
 from utils import verificar_api_key, prompt_inicial
 from utils import gerar_recomendacao, salvar_pdf
+from dotenv import load_dotenv
+
+
+# Carregar variáveis de ambiente do arquivo .env
+load_dotenv()
 
 # Carrega a chave API da OpenAI de uma variável de ambiente
 openai.api_key = os.getenv('OPENAI_API_KEY')
