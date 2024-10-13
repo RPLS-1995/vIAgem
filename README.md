@@ -52,9 +52,13 @@ Para iniciar a interação com o vIAgem, o cliente deve preencher os campos acim
 os campos preenchidos e o resultado retornado pelo sistema.
 ![image](https://github.com/user-attachments/assets/99d69c9e-1440-461e-912f-8f04c6e73f8b)
 ![image](https://github.com/user-attachments/assets/3edab690-494b-40cf-8c52-a48ca6f48c61)
-![image](https://github.com/user-attachments/assets/d7529610-878c-49ba-a9bb-e64808c05649)
+![image](https://github.com/user-attachments/assets/d8044f3c-138c-4502-ad6c-6c66bec29e22)
 
 
-
+No exemplo acima, foi pedido para o vIAgem construir um guia para uma viagem a Curitiba entre os dias 18/10/2024 e 20/10/2024, para 1 pessoa de 29 anos
+com um orçamento de 1000 reais.
+O sistema retornou um guia detalhado, dia a dia, apresentando dicas de passeios, sugestões de locais para refeições, locais de visitação gratuita
+e um valor médio de hospedagem. O guia turístico também compartilha links para que o cliente possa conhecer mais sobre algumas atrações e tenha acesso
+aos sites para compra de tickets.
 
 
